@@ -17,11 +17,20 @@ public class Tuple extends Object {
 	 */
 	private List<String> values;
 
+	public Tuple(Attributes instanceOfAttributes, List<String> valueCollection) {
+		super();
+
+		this.attributes = instanceOfAttributes;
+		this.values = valueCollection;
+		
+		return;
+	}
+
 	/**
 	 * 属性リストを応答する。
 	 */
 	public Attributes attributes() {
-		return null;
+		return attributes;
 	}
 
 	/**
@@ -35,7 +44,7 @@ public class Tuple extends Object {
 	 * 値リストを応答する。
 	 */
 	public List<String> values() {
-		return null;
+		return values;
 	}
 
 }

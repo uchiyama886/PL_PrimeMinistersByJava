@@ -7,6 +7,8 @@ import java.io.BufferedWriter;
  */
 public class Writer extends IO {
 
+	private BufferedWriter[] bufferedWriter;
+
 	/**
 	 * HTMLページを基にするテーブルからインデックスファイル(index.html)に書き出す。
 	 */

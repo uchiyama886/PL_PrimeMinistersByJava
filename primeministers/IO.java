@@ -1,7 +1,12 @@
 package primeministers;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,11 +19,15 @@ public class IO extends Object {
 	 */
 	private Table table;
 
+	public IO() {
+
+	}
+
 	/**
 	 * 属性リストを応答する。
 	 */
 	public Attributes attributes() {
-		return null;
+		return this.table.attributes();
 	}
 
 	/**
@@ -39,14 +48,21 @@ public class IO extends Object {
 	 * 指定されたファイルからテキストを読み込んで、それを行リストにして応答するクラスメソッド。
 	 */
 	public static List<String> readTextFromFile(File aFile) {
-		return null;
+		List<String> aList = new ArrayList<String>();
+		try {
+			String fileString = Files.readString(aFile.toPath());
+			aList = readTextFromFile(fileString);
+		} catch (IOException e){
+			e.printStackTrack();
+		}
+		return aList;
 	}
 
 	/**
 	 * 指定されたファイル文字列からテキストを読み込んで、それを行リストにして応答するクラスメソッド。
 	 */
 	public static List<String> readTextFromFile(String fileString) {
-		return null;
+		return splitString(fileString, "\n");
 	}
 
 	/**
@@ -67,19 +83,21 @@ public class IO extends Object {
 	 * 文字列をセパレータで分割したトークン列を応答するクラスメソッド。
 	 */
 	public static List<String> splitString(String string, String separators) {
-		return null;
+		String[] strings = string.split(separators);
+		List<String> aList = new ArrayList<String>();
+		for(String s: strings) {
+			aList.add(s);
+		} 
+		return aList;
 	}
 
 	/**
 	 * テーブルを応答する。
 	 */
 	public Table table() {
-		return null;
+		return this.table;
 	}
 
-	public List<Tuple> tuples() {
-		return null;
-	}
 
 	/**
 	 * 指定された行リストを、指定されたファイルに書き出すクラスメソッド。
