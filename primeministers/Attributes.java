@@ -134,7 +134,7 @@ public class Attributes extends Object {
 	 * ふりがなのインデックスを応答する。
 	 */
 	public int indexOfKana() {
-		return this.index0f("ふりがな");
+		return this.indexOf("ふりがな");
 	}
 
 	/**
