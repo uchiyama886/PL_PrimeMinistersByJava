@@ -224,7 +224,12 @@ public class Attributes extends Object {
 	 * 自分自身を文字列にして、それを応答する。
 	 */
 	public String toString() {
-		return null;
+		StringBuffer aBuffer = new StringBuffer();
+		Class<?> aClass = this.getClass();
+		aBuffer.append(aClass.getName());
+		aBuffer.append("[");
+		aBuffer.append("]");
+		return aBuffer.toString();
 	}
 
 }
