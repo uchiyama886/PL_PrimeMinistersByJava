@@ -6,6 +6,22 @@ package primeministers;
 public class AttributesForPrimeMinisters extends Attributes {
 
 	public AttributesForPrimeMinisters(String aString) {
+		super();
+		if(aString.compareTo("input") == 0) {
+			String[] aCollection = new String[] {"人目", "代", "氏名", "ふりがな", "在位期間", "出身校", "政党", "出身地", "画像",  "縮小画像"};
+			for (String each : aCollection) {
+				this.keys().add(each);
+				this.names().add(new String());
+			}
+		}
+		
+		if(aString.compareTo("output") == 0) {
+			String[] aCollection = new String[] {"人目", "代", "ふりがな", "在位期間", "在位日数", "出身校", "政党", "出身地", "画像"};
+			for (String each : aCollection) {
+				this.keys().add(each);
+				this.names().add(new String());
+			}
+		}
 		
 	}
 
