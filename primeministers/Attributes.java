@@ -4,11 +4,11 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Date;
 /**
  * 属性リスト：情報テーブルを入出力する際の属性情報を記憶。
  */
-public class Attributes extends Object {
+abstract class Attributes extends Object {
 
 	/**
 	 * ベースとなるディレクトリを記憶する（クラス変数）フィールド。
@@ -134,7 +134,7 @@ public class Attributes extends Object {
 	 * ふりがなのインデックスを応答する。
 	 */
 	public int indexOfKana() {
-		return this.index0f("ふりがな");
+		return this.indexOf("ふりがな");
 	}
 
 	/**
@@ -224,7 +224,12 @@ public class Attributes extends Object {
 	 * 自分自身を文字列にして、それを応答する。
 	 */
 	public String toString() {
-		return null;
+		StringBuffer aBuffer = new StringBuffer();
+		Class<?> aClass = this.getClass();
+		aBuffer.append(aClass.getName());
+		aBuffer.append("[");
+		aBuffer.append("]");
+		return aBuffer.toString();
 	}
 
 }
