@@ -4,11 +4,11 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Date;
 /**
  * 属性リスト：情報テーブルを入出力する際の属性情報を記憶。
  */
-public class Attributes extends Object {
+abstract class Attributes extends Object {
 
 	/**
 	 * ベースとなるディレクトリを記憶する（クラス変数）フィールド。

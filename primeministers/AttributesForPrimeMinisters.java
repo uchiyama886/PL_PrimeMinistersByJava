@@ -6,6 +6,22 @@ package primeministers;
 public class AttributesForPrimeMinisters extends Attributes {
 
 	public AttributesForPrimeMinisters(String aString) {
+		super();
+		if(aString.compareTo("input") == 0) {
+			String[] aCollection = new String[] {"人目", "代", "氏名", "ふりがな", "在位期間", "出身校", "政党", "出身地", "画像",  "縮小画像"};
+			for (String each : aCollection) {
+				this.keys().add(each);
+				this.names().add(new String());
+			}
+		}
+		
+		if(aString.compareTo("output") == 0) {
+			String[] aCollection = new String[] {"人目", "代", "ふりがな", "在位期間", "在位日数", "出身校", "政党", "出身地", "画像"};
+			for (String each : aCollection) {
+				this.keys().add(each);
+				this.names().add(new String());
+			}
+		}
 		
 	}
 
@@ -34,7 +50,7 @@ public class AttributesForPrimeMinisters extends Attributes {
 	 * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答する。
 	 */
 	public String csvUrl() {
-		return this.baseUrl + "PrimeMinisters.csv";
+		return this.baseUrl() + "PrimeMinisters.csv";
 	}
 
 	/**
@@ -48,7 +64,7 @@ public class AttributesForPrimeMinisters extends Attributes {
 	 * 政党のインデックスを応答する。
 	 */
 	public int indexOfParty() {
-		return this.indexOF("政党");
+		return this.indexOf("政党");
 	}
 
 	/**
@@ -62,7 +78,7 @@ public class AttributesForPrimeMinisters extends Attributes {
 	 * 出身校のインデックスを応答する。
 	 */
 	public int indexOfSchool() {
-		return this.index0f("出身校");
+		return this.indexOf("出身校");
 	}
 
 	/**
