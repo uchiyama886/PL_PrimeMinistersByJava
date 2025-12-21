@@ -2,24 +2,24 @@ package csv2html;
 
 import java.io.File;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import condition.Condition;
 import condition.Interval;
-import java.util.function.Supplier;
 
 /**
- * 属性リスト：総理大臣の情報テーブルを入出力する際の属性情報を記憶。
+ * 属性リスト：徳川幕府の情報テーブルを入出力する際の属性情報を記憶。
  */
-public class AttributesForPrimeMinisters extends Attributes
+public class AttributesForTokugawaShogunate extends Attributes
 {
 	/**
-	 * 入力用("input")または出力用("output")で総理大臣の属性リストを作成するコンストラクタ。
+	 * 入力用("input")または出力用("output")で徳川幕府の属性リストを作成するコンストラクタ。
 	 * @param aString 入力用("input")または出力用("output")
 	 */
-	public AttributesForPrimeMinisters(String aString)
+	public AttributesForTokugawaShogunate(String aString)
 	{
 		super();
-		Supplier<String[]> stringForInput = () -> new String[] {"人目", "代", "氏名", "ふりがな", "在位期間", "出身校", "政党", "出身地", "画像", "縮小画像"};
+		Supplier<String[]> stringForInput = () -> new String[] {"代", "氏名", "ふりがな", "在位期間", "出身家", "官位", "画像", "縮小画像", "院号", "墓所" };
 		Runnable truePassageForInput = () -> {
 			String[] aCollection = stringForInput.get();
 			Consumer<Integer> loopPassage = index -> {
@@ -32,7 +32,7 @@ public class AttributesForPrimeMinisters extends Attributes
 		Condition aConditionForInput = new Condition(() -> aString.compareTo("input") == 0);
 		aConditionForInput.ifTrue(truePassageForInput);
 
-		Supplier<String[]> stringForOutput = () -> new String[] { "人目", "代", "氏名", "ふりがな", "在位期間", "在位日数", "出身校", "政党", "出身地", "画像" };
+		Supplier<String[]> stringForOutput = () -> new String[] {"代", "氏名", "ふりがめ", "在位期間", "在位日数", "出身家", "官位", "画像", "院号", "墓所" };
 		Runnable truePassageForOutput = () -> {
 			String[] aCollection = stringForOutput.get();
 			Consumer<Integer> loopPassage = index -> {
@@ -44,7 +44,7 @@ public class AttributesForPrimeMinisters extends Attributes
 		};
 		Condition aConditionForOutput = new Condition(() -> aString.compareTo("output") == 0);
 		aConditionForOutput.ifTrue(truePassageForOutput);
-
+	
 		return;
 	}
 
@@ -54,71 +54,71 @@ public class AttributesForPrimeMinisters extends Attributes
 	 */
 	public String captionString()
 	{
-		return "総理大臣";
+		return "徳川幕府";
 	}
 
 	/**
-	 * 総理大臣のページのためのディレクトリを応答する。
-	 * @return 総理大臣のページのためのディレクトリ
+	 * 徳川幕府のページのためのディレクトリを応答する。
+	 * @return 徳川幕府のページのためのディレクトリ
 	 */
 	public String baseDirectory()
 	{
-		return this.baseDirectory("PrimeMinisters");
+		return this.baseDirectory("TokugawaShogunate");
 	}
 
 	/**
-	 * 総理大臣の情報の在処(URL)を文字列で応答する。
-	 * @return 総理大臣の情報の在処の文字列
+	 * 徳川幕府の情報の在処(URL)を文字列で応答する。
+	 * @return 徳川幕府の情報の在処の文字列
 	 */
 	public String baseUrl()
 	{
-		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/";
+		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/TokugawaShogunate/";
 	}
 
 	/**
-	 * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答する。
+	 * 徳川幕府の情報を記したCSVファイルの在処(URL)を文字列で応答する。
 	 * @return 情報を記したCSVファイル文字列
 	 */
 	public String csvUrl()
 	{
-		return this.baseUrl() + "PrimeMinisters.csv";
-		// return this.baseUrl() + "PrimeMinisters2.csv";
+		return this.baseUrl() + "TokugawaShogunate.csv";
+		// return this.baseUrl() + "TokugawaShogunate2.csv";
 	}
 
 	/**
-	 * 政党のインデックスを応答する。
+	 * 墓所のインデックスを応答する。
 	 * @return インデックス
 	 */
-	public int indexOfParty()
+	public int indexOfCemetery()
 	{
-		return this.indexOf("政党");
+		return this.indexOf("墓所");
 	}
 
 	/**
-	 * 出身地のインデックスを応答する。
+	 * 出身家のインデックスを応答する。
 	 * @return インデックス
 	 */
-	public int indexOfPlace()
+	public int indexOfFamily()
 	{
-		return this.indexOf("出身地");
+		return this.indexOf("出身家");
 	}
 
 	/**
-	 * 代のインデックスを応答する。
+	 * 院号のインデックスを応答する。
 	 * @return インデックス
 	 */
-	public int indexOfOrder()
+	public int indexOfFormer()
 	{
-		return this.indexOf("代");
+		return this.indexOf("院号");
 	}
 
 	/**
-	 * 出身校のインデックスを応答する。
+	 * 官位のインデックスを応答する。
 	 * @return インデックス
 	 */
-	public int indexOfSchool()
+	public int indexOfRank()
 	{
-		return this.indexOf("出身校");
+		return this.indexOf("官位");
 	}
 
 	/**
@@ -127,6 +127,6 @@ public class AttributesForPrimeMinisters extends Attributes
 	 */
 	public String titleString()
 	{
-		return "総理大臣";
+		return "Tokugawa Shogunate";
 	}
 }
