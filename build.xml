@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="primeministers" default="all" basedir=".">
+<project name="PL_PRIMEMINISTERBYJAVA" default="all" basedir=".">
 
+	<property name="homedir" value="${user.home}" />
 	<property name="package" value="primeministers" />
+	<property name="utility" value="utility" />
 	<property name="condition" value="condition" />
-	<property name="packagenames" value="${package},${condition}" />
+	<property name="packagenames" value="${package},${utility}" />
 	<property name="destdir" value="./Classes" />
 	<property name="docdir" value="./JavaDoc" />
 	<property name="instdir" value="./${ant.project.name}.app/Contents/Resources/Java" />
-	<property name="copyright" value="Copyright 2025 TEAM PPP All Rights Reserved." />
+	<property name="copyright" value="Copyright 2008-2017 AOKI Atsushi. All Rights Reserved." />
 	<property name="zipname" value="${ant.project.name}" />
 
 	<target name="all" depends="jar" description="build all">
@@ -31,6 +33,11 @@
 			verbose="false">
 			<compilerarg value="-J-Dfile.encoding=UTF8" />
 			<compilerarg value="-Xlint:all" />
+			<classpath>
+				<pathelement location="." />
+				<pathelement location="${utility}.jar" />
+				<pathelement location="${condition}.jar"/>
+			</classpath>
 		</javac>
 		<exec executable="date" spawn="false" />
 	</target>
@@ -40,6 +47,7 @@
 			jarfile="${package}.jar"
 			basedir="${destdir}"
 			manifest="${package}.mf">
+			<zipfileset src="${utility}.jar" />
 		</jar>
 		<exec executable="date" spawn="false" />
 	</target>
@@ -60,11 +68,16 @@
 		<exec executable="java" spawn="false">
 			<arg line="-Dfile.encoding=UTF-8 -Xmx512m -Xss1024k -jar ${package}.jar" />
 		</exec>
+		<!--
+		<exec executable="open" spawn="false">
+			<arg line="${homedir}/Desktop/${ant.project.name}/index.html" />
+		</exec>
+		-->
 		<exec executable="date" spawn="false" />
 	</target>
 
 	<target name="install" depends="all" description="install into application">
-		<copy file="${package}.jar" todir="${instdir}"/>
+		<copy file="${package}.jar" todir="${instdir}" />
 		<exec executable="chmod">
 			<arg line="755 ${instdir}/../../MacOS/applet" />
 		</exec>
@@ -90,11 +103,11 @@
 			<bottom>${copyright}</bottom>
 			<classpath>
 				<pathelement location="." />
-				<pathelement location="${condition}.jar" />
+				<pathelement location="${utility}.jar" />
 			</classpath>
 		</javadoc>
 		<exec executable="open">
-			<arg line="-a 'Safari' ${docdir}/index.html" />
+			<arg line="${docdir}/index.html" />
 		</exec>
 		<exec executable="date" spawn="false" />
 	</target>
