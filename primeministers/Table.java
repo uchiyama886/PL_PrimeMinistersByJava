@@ -1,4 +1,4 @@
-package csv2html;
+package primeministers;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

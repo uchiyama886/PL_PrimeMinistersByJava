@@ -1,4 +1,4 @@
-package csv2html;
+package primeministers;
 
 import java.util.ArrayList;
 import java.util.List;

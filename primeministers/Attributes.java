@@ -1,4 +1,4 @@
-package csv2html;
+package primeministers;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
