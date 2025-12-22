@@ -13,10 +13,13 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.net.MalformedURLException;
 import java.net.URL;
 import utility.ImageUtility;
+import condition.Condition;
 
 /**
  * ダウンローダ：CSVファイル・画像ファイル・サムネイル画像ファイルをダウンロードする。
@@ -94,29 +97,37 @@ public class Downloader extends IO
 	 */
 	private void downloadPictures(int indexOfPicture)
 	{
-		String urlString = this.attributes().baseUrl();
-		String pictureString = this.attributes().nameAt(indexOfPicture);
-		urlString = urlString + "/" + pictureString;
-
-		URL aURL = null;
-		try { aURL = new URL(urlString);}
-		catch (MalformedURLException anException) {anException.printStackTrace();}
-
-		BufferedImage anImage = null;
-		try {anImage = ImageIO.read(aURL);}
-		catch (IOException anException) {anException.printStackTrace();}
-
-		if (anImage == null) {resourceNotFound(urlString);}
-
-		String filePath = this.attributes().baseDirectory();
-        String fileString = urlString.substring(urlString.lastIndexOf("/") + 1);
-		filePath = filePath + File.separator + fileString;
-
-		File aFile = new File(filePath);
-		String kindString = urlString.substring(urlString.lastIndexOf(".") + 1);
-		try { ImageIO.write(anImage, kindString, aFile); }
-		catch (IOException anException) {anException.printStackTrace();}
-
+		List<Tuple> tuples = this.table().tuples();
+		List<String> pictureNames = new ArrayList<String>();
+		tuples.forEach((Tuple aTuple) -> {
+			List<String> values = aTuple.values();
+			pictureNames.add(values.get(indexOfPicture));
+		});
+		
+		pictureNames.forEach((String pictureString) -> {
+			String urlString = this.attributes().baseUrl();
+			urlString = urlString + "/" + pictureString;
+	
+			URL aURL = null;
+			try { aURL = new URL(urlString);}
+			catch (MalformedURLException anException) {anException.printStackTrace();}
+	
+			BufferedImage anImage = null;
+			try {anImage = ImageIO.read(aURL);}
+			catch (IOException anException) {anException.printStackTrace();}
+	
+			if (anImage == null) {resourceNotFound(urlString);}
+	
+			String filePath = this.attributes().baseDirectory();
+			String fileString = urlString.substring(urlString.lastIndexOf("/") + 1);
+			filePath = filePath + File.separator + fileString;
+	
+			File aFile = new File(filePath);
+			String kindString = urlString.substring(urlString.lastIndexOf(".") + 1);
+			try { ImageIO.write(anImage, kindString, aFile); }
+			catch (IOException anException) {anException.printStackTrace();}
+		});
+	
 		return;
 	}
 
