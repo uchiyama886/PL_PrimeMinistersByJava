@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
@@ -49,35 +51,18 @@ public class Downloader extends IO
 
 		String filePath = this.attributes().baseDirectory();
         String fileString = urlString.substring(urlString.lastIndexOf("/") + 1);
-		filePath = filePath + File.separator + fileString;
-        
-		// ウェブページをローカルディスクのファイルにダウンロードする。つまり、写し取る。
-		try
+		filePath = filePath + fileString;
+		try(InputStream inputStream = aURL.openStream();
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8"));)
 		{
-			InputStream inputStream = aURL.openStream();
-			InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-	
-			FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
-			BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-	
-			while (true)
+			String aString;
+			while ((aString = bufferedReader.readLine()) != null)
 			{
-				String aString = bufferedReader.readLine();
-				if (aString == null) { break; }
 				bufferedWriter.write(aString);
 				bufferedWriter.newLine();
 			}
-			bufferedWriter.flush();
-	
-			bufferedReader.close();
-			bufferedWriter.close();
-		}
-		catch (FileNotFoundException anExeption) {resourceNotFound(urlString);}
-		catch (UnsupportedEncodingException anException) { anException.printStackTrace(); }
-		catch (IOException anException) { anException.printStackTrace(); }
-
+		}catch (IOException anException){ anException.printStackTrace();}
 		return;
 	}
 
@@ -150,6 +135,8 @@ public class Downloader extends IO
 	public void perform()
 	{
 		this.downloadCSV();
+		Reader aReader = new Reader(this.table());
+		aReader.perform();
 		this.downloadImages();
 		this.downloadThumbnails();
 		return;

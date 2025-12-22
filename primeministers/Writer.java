@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.function.Consumer;
 
 import utility.StringUtility;
+import condition.Condition;
 import condition.Interval;
 
 /**
@@ -66,23 +67,23 @@ public class Writer extends IO
 	{
 		try {
 			AtomicInteger level = new AtomicInteger(0);
-			writeLine(aWriter, level.get(), "<body>\n");
-			writeLine(aWriter, level.get(), "<div class=\"belt\">\n");
-			writeLine(aWriter, level.get(), "<h2>" + this.attributes().captionString() + "<h2>\n");
-			writeLine(aWriter, level.get(), "</div>\n");
-			writeLine(aWriter, level.get(), "<table class=\"belt\" summary=\"belt\">\n");
+			writeLine(aWriter, level.get(), "<body>");
+			writeLine(aWriter, level.get(), "<div class=\"belt\">");
+			writeLine(aWriter, level.get(), "<h2>" + this.attributes().captionString() + "<h2>");
+			writeLine(aWriter, level.get(), "</div>");
+			writeLine(aWriter, level.get(), "<table class=\"belt\" summary=\"belt\">");
 			level.incrementAndGet();
-			writeLine(aWriter, level.get(), "<tbody>\n");
+			writeLine(aWriter, level.get(), "<tbody>");
 			level.incrementAndGet();
-			writeLine(aWriter, level.get(),"<tr>\n");
+			writeLine(aWriter, level.get(),"<tr>");
 			level.incrementAndGet();
-			writeLine(aWriter, level.get(),"<td>\n");
+			writeLine(aWriter, level.get(),"<td>");
 			level.incrementAndGet();
-			writeLine(aWriter, level.get(),"<table class=\"content\" summary=\"table\">\n");
+			writeLine(aWriter, level.get(),"<table class=\"content\" summary=\"table\">");
 			level.incrementAndGet();
-			writeLine(aWriter, level.get(),"<tbody>\n");
+			writeLine(aWriter, level.get(),"<tbody>");
 			level.incrementAndGet();
-			writeLine(aWriter, level.get(),"<tr>\n");
+			writeLine(aWriter, level.get(),"<tr>");
 			Attributes anAttributes = this.table().attributes();
 			List<String> names = anAttributes.names();
 			names.forEach((String name) -> {
@@ -189,7 +190,9 @@ public class Writer extends IO
 					html.append("<td class=\"");
 					html.append(color);
 					html.append("\">");
-					html.append(IO.htmlCanonicalString(value));
+					Runnable inTag = () -> {html.append(value);};
+					Runnable outTag = () ->{html.append(IO.htmlCanonicalString(value));};
+					new Condition(() -> value.contains("<") && value.contains(">")).ifThenElse(inTag, outTag);
 					html.append("</td>");
 					writeLine(aWriter, level.get()+ 1, html.toString());
 				}catch (IOException anException) {anException.printStackTrace();}
@@ -213,7 +216,7 @@ public class Writer extends IO
 			try {	aWriter.write("    ");} 
 			catch (IOException anException) {anException.printStackTrace();}
 		};
-		Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < level, index -> index++);
+		Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < level, index -> index+1);
 		anInterval.forEach(loopPassage);
 		aWriter.write(line);
 		aWriter.newLine();  

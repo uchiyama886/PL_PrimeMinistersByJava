@@ -85,7 +85,7 @@ public abstract class IO extends Object
 			Condition aCondition = new Condition(() -> isQuot);
 			aCondition.ifThenElse(convert, elsePssage);	
 		};
-		Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aString.length(), index -> index++);
+		Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aString.length(), index -> index+1);
 		anInterval.forEach(loopPasage);
 	
 		return result.toString();

@@ -143,9 +143,9 @@ public class Translator extends Object
 		aDownloader.perform();
 
 		// CSVに由来するテーブルをHTMLに由来するテーブルへと変換する。
-		System.out.println(this.inputTable);
+		//System.out.println(this.inputTable);
 		this.translate();
-		System.out.println(this.outputTable);
+		//System.out.println(this.outputTable);
 
 		// HTMLに由来するテーブルから書き出す。
 		Writer aWriter = new Writer(this.outputTable);
@@ -183,8 +183,8 @@ public class Translator extends Object
 	 */
 	public void translate()
 	{
-		Reader aReader = new Reader(this.inputTable);
-		aReader.perform();
+		//Reader aReader = new Reader(this.inputTable);
+		//aReader.perform();
 
 		List<Tuple> inputTuples = this.inputTable.tuples();
 		Attributes inAttr = this.inputTable.attributes();

@@ -30,7 +30,10 @@ public class Reader extends IO
 	 */
 	public void perform()
 	{
-		List<String> lines = IO.readTextFromURL(table().attributes().csvUrl());
+		String urlString = table().attributes().csvUrl();
+		String fileString = urlString.substring(urlString.lastIndexOf("/") + 1);
+		String filePath = attributes().baseDirectory() + fileString;
+		List<String> lines = IO.readTextFromFile(filePath);
 		if(lines == null || lines.isEmpty()) {
 			System.err.println("Warnig: CSV file is empty or not found.");
 			return;
