@@ -119,10 +119,11 @@ public class Downloader extends IO
 			if (anImage == null) {resourceNotFound(urlString);}
 	
 			String filePath = this.attributes().baseDirectory();
-			String fileString = urlString.substring(urlString.lastIndexOf("/") + 1);
-			filePath = filePath + File.separator + fileString;
+			//String fileString = urlString.substring(urlString.lastIndexOf("/") + 1);
+			filePath = filePath + File.separator + pictureString;
 	
 			File aFile = new File(filePath);
+			aFile.getParentFile().mkdirs();
 			String kindString = urlString.substring(urlString.lastIndexOf(".") + 1);
 			try { ImageIO.write(anImage, kindString, aFile); }
 			catch (IOException anException) {anException.printStackTrace();}
