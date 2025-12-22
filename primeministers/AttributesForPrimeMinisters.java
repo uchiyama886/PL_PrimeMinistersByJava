@@ -130,6 +130,6 @@ public class AttributesForPrimeMinisters extends Attributes
 	 */
 	public String titleString()
 	{
-		return "総理大臣";
+		return "Prime Minister";
 	}
 }
