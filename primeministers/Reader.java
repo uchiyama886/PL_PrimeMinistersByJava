@@ -1,14 +1,13 @@
 package primeministers;
 
-//import java.io.File;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.function.Consumer;
-//import utility.StringUtility;
 import condition.Condition;
 import condition.Interval;
+import java.util.ArrayList;
+import java.util.function.Consumer;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * リーダ：情報を記したCSVファイルを読み込んでテーブルに仕立て上げる。
  */

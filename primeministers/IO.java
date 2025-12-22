@@ -1,15 +1,13 @@
 package primeministers;
 
+import condition.Condition;
+import condition.Interval;
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.List;
-//import java.util.HashMap;
-//import java.util.Map;
 import java.util.function.Consumer;
+import java.util.List;
 import utility.StringUtility;
-import condition.Condition;
-import condition.Interval;
 
 /**
  * 入出力：リーダ・ダウンローダ・ライタを抽象する。

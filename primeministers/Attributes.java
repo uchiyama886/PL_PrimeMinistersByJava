@@ -1,5 +1,7 @@
 package primeministers;
 
+import condition.Condition;
+import condition.Interval;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,9 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
-
-import condition.Condition;
-import condition.Interval;
 
 /**
  * 属性リスト：情報テーブルを入出力する際の属性情報を記憶。

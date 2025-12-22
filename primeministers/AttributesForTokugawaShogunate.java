@@ -1,11 +1,9 @@
 package primeministers;
 
-//import java.io.File;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
 import condition.Condition;
 import condition.Interval;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * 属性リスト：徳川幕府の情報テーブルを入出力する際の属性情報を記憶。

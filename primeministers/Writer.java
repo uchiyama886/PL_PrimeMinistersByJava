@@ -1,8 +1,8 @@
 package primeministers;
 
+import condition.Condition;
+import condition.Interval;
 import java.io.BufferedWriter;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,11 +11,10 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
-
+import java.util.List;
 import utility.StringUtility;
-import condition.Condition;
-import condition.Interval;
 
 /**
  * ライタ：情報のテーブルをHTMLページとして書き出す。

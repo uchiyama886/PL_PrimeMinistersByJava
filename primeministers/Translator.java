@@ -1,20 +1,17 @@
 package primeministers;
 
+import condition.Condition;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Arrays;
 import java.util.GregorianCalendar;
-//import java.util.HashSet;
 import java.util.List;
-//import java.util.concurrent.atomic.AtomicInteger;
-
-import condition.Condition;
 
 /**
  * トランスレータ：CSVファイルをHTMLページへと変換するプログラム。

@@ -11,17 +11,12 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-
-import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.net.MalformedURLException;
 import java.net.URL;
-//import utility.ImageUtility;
-//import condition.Condition;
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ダウンローダ：CSVファイル・画像ファイル・サムネイル画像ファイルをダウンロードする。
@@ -62,7 +57,9 @@ public class Downloader extends IO
 				bufferedWriter.write(aString);
 				bufferedWriter.newLine();
 			}
-		}catch (IOException anException){ anException.printStackTrace();}
+		}catch (FileNotFoundException anException) {resourceNotFound(urlString);}
+		catch (UnsupportedEncodingException anExcepiton) {anExcepiton.printStackTrace();}
+		catch (IOException anException){ anException.printStackTrace();}
 		return;
 	}
 

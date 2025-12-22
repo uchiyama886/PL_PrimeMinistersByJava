@@ -1,10 +1,8 @@
 package primeministers;
 
-//import java.io.File;
-import java.util.function.Consumer;
-
 import condition.Condition;
 import condition.Interval;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
