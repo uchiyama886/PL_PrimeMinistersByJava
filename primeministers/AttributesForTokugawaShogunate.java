@@ -19,27 +19,31 @@ public class AttributesForTokugawaShogunate extends Attributes
 	public AttributesForTokugawaShogunate(String aString)
 	{
 		super();
-		Supplier<String[]> stringForInput = () -> new String[] {"代", "氏名", "ふりがな", "在位期間", "出身家", "官位", "画像", "縮小画像", "院号", "墓所" };
+		Supplier<String[]> keyStringForInput = () -> new String[] {"no", "name", "kana", "period", "family", "rank", "image", "thumbnail", "former", "cemetery" };
+		Supplier<String[]> nameStringForInput = () -> new String[] {"代", "氏名", "ふりがな", "在位期間", "出身家", "官位", "画像", "縮小画像", "院号", "墓所" };
 		Runnable truePassageForInput = () -> {
-			String[] aCollection = stringForInput.get();
+			String[] aKeyCollection = keyStringForInput.get();
+			String[] aNameCollection = nameStringForInput.get();
 			Consumer<Integer> loopPassage = index -> {
-				this.keys().add(aCollection[index]);
-				this.names().add(new String());
+				this.keys().add(aKeyCollection[index]);
+				this.names().add(aNameCollection[index]);
 			};
-			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aCollection.length, index -> index++);
+			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aKeyCollection.length, index -> index++);
 			anInterval.forEach(loopPassage);		
 		};
 		Condition aConditionForInput = new Condition(() -> aString.compareTo("input") == 0);
 		aConditionForInput.ifTrue(truePassageForInput);
 
-		Supplier<String[]> stringForOutput = () -> new String[] {"代", "氏名", "ふりがめ", "在位期間", "在位日数", "出身家", "官位", "画像", "院号", "墓所" };
+		Supplier<String[]> keyStringForOutput = () -> new String[] {"no", "name", "kana", "period", "days", "family", "rank", "image", "former", "cemetery" };
+		Supplier<String[]> nameStringForOutput = () -> new String[] {"代", "氏名", "ふりがな", "在位期間", "在位日数", "出身家", "官位", "画像", "院号", "墓所" };
 		Runnable truePassageForOutput = () -> {
-			String[] aCollection = stringForOutput.get();
+			String[] aKeyCollection = keyStringForOutput.get();
+			String[] aNameCollection = nameStringForOutput.get();
 			Consumer<Integer> loopPassage = index -> {
-				this.keys().add(aCollection[index]);
-				this.names().add(new String());
+				this.keys().add(aKeyCollection[index]);
+				this.names().add(aNameCollection[index]);
 			};
-			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aCollection.length, index -> index++);
+			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aKeyCollection.length, index -> index++);
 			anInterval.forEach(loopPassage);
 		};
 		Condition aConditionForOutput = new Condition(() -> aString.compareTo("output") == 0);
@@ -91,7 +95,7 @@ public class AttributesForTokugawaShogunate extends Attributes
 	 */
 	public int indexOfCemetery()
 	{
-		return this.indexOf("墓所");
+		return this.indexOf("cemetery");
 	}
 
 	/**
@@ -100,7 +104,7 @@ public class AttributesForTokugawaShogunate extends Attributes
 	 */
 	public int indexOfFamily()
 	{
-		return this.indexOf("出身家");
+		return this.indexOf("family");
 	}
 
 	/**
@@ -109,7 +113,7 @@ public class AttributesForTokugawaShogunate extends Attributes
 	 */
 	public int indexOfFormer()
 	{
-		return this.indexOf("院号");
+		return this.indexOf("former");
 	}
 
 	/**
@@ -118,7 +122,7 @@ public class AttributesForTokugawaShogunate extends Attributes
 	 */
 	public int indexOfRank()
 	{
-		return this.indexOf("官位");
+		return this.indexOf("rank");
 	}
 
 	/**

@@ -160,7 +160,7 @@ abstract class Attributes extends Object
 	 */
 	public int indexOfDays()
 	{
-		return this.indexOf("在位日数");
+		return this.indexOf("days");
 	}
 
 	/**
@@ -169,7 +169,7 @@ abstract class Attributes extends Object
 	 */
 	public int indexOfImage()
 	{
-		return this.indexOf("画像");
+		return this.indexOf("image");
 	}
 
 	/**
@@ -178,7 +178,7 @@ abstract class Attributes extends Object
 	 */
 	public int indexOfKana()
 	{
-		return this.indexOf("ふりがな");
+		return this.indexOf("kana");
 	}
 
 	/**
@@ -187,7 +187,7 @@ abstract class Attributes extends Object
 	 */
 	public int indexOfName()
 	{
-		return this.indexOf("氏名");
+		return this.indexOf("name");
 	}
 
 	/**
@@ -196,7 +196,7 @@ abstract class Attributes extends Object
 	 */
 	public int indexOfNo()
 	{
-		return this.indexOf("人目");
+		return this.indexOf("no");
 	}
 
 	/**
@@ -205,7 +205,7 @@ abstract class Attributes extends Object
 	 */
 	public int indexOfPeriod()
 	{
-		return this.indexOf("在位期間");
+		return this.indexOf("period");
 	}
 
 	/**
@@ -214,7 +214,7 @@ abstract class Attributes extends Object
 	 */
 	public int indexOfThumbnail()
 	{
-		return this.indexOf("縮小画像");
+		return this.indexOf("thumbnail");
 	}
 
 	/**

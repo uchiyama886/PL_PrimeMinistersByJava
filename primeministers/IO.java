@@ -5,7 +5,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import utility.StringUtility;
+import condition.Condition;
 
 /**
  * 入出力：リーダ・ダウンローダ・ライタを抽象する。
@@ -64,8 +66,23 @@ public abstract class IO extends Object
 	 */
 	public static String htmlCanonicalString(String aString)
 	{
-		return null;
+		if(aString == null) return "";
+
+		StringBuilder result = new StringBuilder(aString.length());
+		Consumer<Integer> loopPasage = index -> {
+			char aCharacter = aString.charAt(index);
+			new Condition.Switch()
+				.addCase(() -> aCharacter.compareTo('&') == 0, () -> {result.append("&amp;");})
+				.addCase(() -> aCharacter.compareTo('<') == 0, () -> {result.append("&lt;");})
+				.addCase(() -> aCharacter.compareTo('>') == 0, () -> {result.append("&gt;");})
+				.addCase(() -> aCharacter.compareTo('"') == 0, () -> {result.append("&quot;");})
+				.defaultCase(() -> {result.append(aCharacter);})
+				.evaluate();
+		};
+	
+		return result.toString();
 	}
+	
 
 	/**
 	 * 指定されたファイルからテキストを読み込んで、それを行リストにして応答するクラスメソッド。

@@ -19,27 +19,31 @@ public class AttributesForPrimeMinisters extends Attributes
 	public AttributesForPrimeMinisters(String aString)
 	{
 		super();
-		Supplier<String[]> stringForInput = () -> new String[] {"人目", "代", "氏名", "ふりがな", "在位期間", "出身校", "政党", "出身地", "画像", "縮小画像"};
+		Supplier<String[]> keyStringForInput = () -> new String[] {"no", "order", "name", "kana", "period", "school", "party", "place", "image", "thumbnail"};
+		Supplier<String[]> nameStringForInput = () -> new String[] {"人目", "代", "氏名", "ふりがな", "在位期間", "出身校", "政党", "出身地", "画像", "縮小画像"};
 		Runnable truePassageForInput = () -> {
-			String[] aCollection = stringForInput.get();
+			String[] aKeyCollection = keyStringForInput.get();
+			String[] aNameCollection = nameStringForInput.get();
 			Consumer<Integer> loopPassage = index -> {
-				this.keys().add(aCollection[index]);
-				this.names().add(new String());
+				this.keys().add(aKeyCollection[index]);
+				this.names().add(aNameCollection[index]);
 			};
-			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aCollection.length, index -> index++);
+			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aKeyCollection.length, index -> index++);
 			anInterval.forEach(loopPassage);		
 		};
 		Condition aConditionForInput = new Condition(() -> aString.compareTo("input") == 0);
 		aConditionForInput.ifTrue(truePassageForInput);
 
-		Supplier<String[]> stringForOutput = () -> new String[] { "人目", "代", "氏名", "ふりがな", "在位期間", "在位日数", "出身校", "政党", "出身地", "画像" };
+		Supplier<String[]> keyStringForOutput = () -> new String[] { "no", "order", "name", "kana", "period", "days", "school", "party", "place", "image" };
+		Supplier<String[]> nameStringForOutput = () -> new String[] { "人目", "代", "氏名", "ふりがな", "在位期間", "在位日数", "出身校", "政党", "出身地", "画像" };
 		Runnable truePassageForOutput = () -> {
-			String[] aCollection = stringForOutput.get();
+			String[] aKeyCollection = keyStringForOutput.get();
+			String[] aNameCollection = nameStringForOutput.get(); 
 			Consumer<Integer> loopPassage = index -> {
-				this.keys().add(aCollection[index]);
-				this.names().add(new String());
+				this.keys().add(aKeyCollection[index]);
+				this.names().add(aNameCollection[index]);
 			};
-			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aCollection.length, index -> index++);
+			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aKeyCollection.length, index -> index++);
 			anInterval.forEach(loopPassage);
 		};
 		Condition aConditionForOutput = new Condition(() -> aString.compareTo("output") == 0);
@@ -91,7 +95,7 @@ public class AttributesForPrimeMinisters extends Attributes
 	 */
 	public int indexOfParty()
 	{
-		return this.indexOf("政党");
+		return this.indexOf("party");
 	}
 
 	/**
@@ -100,7 +104,7 @@ public class AttributesForPrimeMinisters extends Attributes
 	 */
 	public int indexOfPlace()
 	{
-		return this.indexOf("出身地");
+		return this.indexOf("place");
 	}
 
 	/**
@@ -109,7 +113,7 @@ public class AttributesForPrimeMinisters extends Attributes
 	 */
 	public int indexOfOrder()
 	{
-		return this.indexOf("代");
+		return this.indexOf("order");
 	}
 
 	/**
@@ -118,7 +122,7 @@ public class AttributesForPrimeMinisters extends Attributes
 	 */
 	public int indexOfSchool()
 	{
-		return this.indexOf("出身校");
+		return this.indexOf("school");
 	}
 
 	/**
