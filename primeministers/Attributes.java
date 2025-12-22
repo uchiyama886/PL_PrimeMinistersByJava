@@ -303,7 +303,7 @@ abstract class Attributes extends Object
 			aCondition.ifTrue(truePassage);
 			aBuffer.append(this.at(index));
 		};
-		Interval<Integer> anInterval = new Interval<>(0, index -> index < this.size(), index -> index++);
+		Interval<Integer> anInterval = new Interval<>(0, index -> index < this.size(), index -> index+1);
 		anInterval.forEach(loopPassage);
 		
 		aBuffer.append("]");

@@ -48,6 +48,7 @@
 			basedir="${destdir}"
 			manifest="${package}.mf">
 			<zipfileset src="${utility}.jar" />
+			<zipfileset src="${condition}.jar" />
 		</jar>
 		<exec executable="date" spawn="false" />
 	</target>

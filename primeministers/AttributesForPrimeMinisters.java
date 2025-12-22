@@ -1,6 +1,6 @@
 package primeministers;
 
-import java.io.File;
+//import java.io.File;
 import java.util.function.Consumer;
 
 import condition.Condition;
@@ -16,6 +16,7 @@ public class AttributesForPrimeMinisters extends Attributes
 	 * 入力用("input")または出力用("output")で総理大臣の属性リストを作成するコンストラクタ。
 	 * @param aString 入力用("input")または出力用("output")
 	 */
+	@SuppressWarnings("this-escape")
 	public AttributesForPrimeMinisters(String aString)
 	{
 		super();
@@ -28,7 +29,7 @@ public class AttributesForPrimeMinisters extends Attributes
 				this.keys().add(aKeyCollection[index]);
 				this.names().add(aNameCollection[index]);
 			};
-			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aKeyCollection.length, index -> index++);
+			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aKeyCollection.length, index -> index+1);
 			anInterval.forEach(loopPassage);		
 		};
 		Condition aConditionForInput = new Condition(() -> aString.compareTo("input") == 0);
@@ -43,7 +44,7 @@ public class AttributesForPrimeMinisters extends Attributes
 				this.keys().add(aKeyCollection[index]);
 				this.names().add(aNameCollection[index]);
 			};
-			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aKeyCollection.length, index -> index++);
+			Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aKeyCollection.length, index -> index+1);
 			anInterval.forEach(loopPassage);
 		};
 		Condition aConditionForOutput = new Condition(() -> aString.compareTo("output") == 0);

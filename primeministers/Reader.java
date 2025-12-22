@@ -1,12 +1,12 @@
 package primeministers;
 
-import java.io.File;
+//import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.function.Consumer;
-import utility.StringUtility;
+//import utility.StringUtility;
 import condition.Condition;
 import condition.Interval;
 /**
@@ -34,10 +34,14 @@ public class Reader extends IO
 
 		String headerLine = lines.get(0);
 		List<String> headers = IO.splitString(headerLine, ",");
+		if(lines == null || lines.isEmpty()) {
+			System.err.println("Warnig: CSV file is empty or not found.");
+			return;
+		}
 
 		Map<String, Integer> csvIndex = new HashMap<>();
 		Consumer<Integer> loopPassage = index -> {csvIndex.put(headers.get(index), index);};
-		Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < headers.size(), index -> index++);
+		Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < headers.size(), index -> index+1);
 		anInterval.forEach(loopPassage);
 
 		Consumer<Integer> dataProcess = lineNo -> {
@@ -59,7 +63,7 @@ public class Reader extends IO
 			Tuple aTuple = new Tuple(table().attributes(), tupleValues);
 			table().add(aTuple);
 		};
-		Interval<Integer> process = new Interval<Integer>(1, lineNo -> lineNo < lines.size(), lineNo -> lineNo++);
+		Interval<Integer> process = new Interval<Integer>(1, lineNo -> lineNo < lines.size(), lineNo -> lineNo+1);
 		process.forEach(dataProcess);
 
 		return;

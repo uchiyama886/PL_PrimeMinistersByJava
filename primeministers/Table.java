@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.List;
-import utility.ImageUtility;
+//import utility.ImageUtility;
 
 /**
  * 表：情報テーブル。

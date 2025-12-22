@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.net.MalformedURLException;
 import java.net.URL;
-import utility.ImageUtility;
-import condition.Condition;
+//import utility.ImageUtility;
+//import condition.Condition;
 
 /**
  * ダウンローダ：CSVファイル・画像ファイル・サムネイル画像ファイルをダウンロードする。
@@ -43,13 +43,12 @@ public class Downloader extends IO
 	public void downloadCSV()
 	{
 		String urlString = this.table().attributes().csvUrl();
-
 		URL aURL = null;
-		try { aURL = new URL(urlString);}
+		try { aURL = java.net.URI.create(urlString).toURL(); }
 		catch (MalformedURLException anException) {anException.printStackTrace();}
 
 		String filePath = this.attributes().baseDirectory();
-        String fileString = urlString.substring(urlString.lastIndexOf("/" + 1));
+        String fileString = urlString.substring(urlString.lastIndexOf("/") + 1);
 		filePath = filePath + File.separator + fileString;
         
 		// ウェブページをローカルディスクのファイルにダウンロードする。つまり、写し取る。
@@ -109,7 +108,7 @@ public class Downloader extends IO
 			urlString = urlString + "/" + pictureString;
 	
 			URL aURL = null;
-			try { aURL = new URL(urlString);}
+			try { aURL = java.net.URI.create(urlString).toURL();}
 			catch (MalformedURLException anException) {anException.printStackTrace();}
 	
 			BufferedImage anImage = null;
