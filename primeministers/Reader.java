@@ -2,6 +2,7 @@ package primeministers;
 
 import condition.Condition;
 import condition.Interval;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.HashMap;
@@ -50,15 +51,15 @@ public class Reader extends IO
 		Consumer<Integer> dataProcess = lineNo -> {
 			String line = lines.get(lineNo);
 
-			List<String> values = IO.splitString(line, ",");
+			String[] values = line.split(",", -1);
 
 			List<String> tupleValues = new ArrayList<>();
 
 			this.attributes().names().forEach((String attributeName) -> {
 				Integer pos = csvIndex.get(attributeName);
-				Runnable truePassage = () -> {tupleValues.add(values.get(pos));};
+				Runnable truePassage = () -> {tupleValues.add(values[pos]);};
 				Runnable elsePassage = () -> {tupleValues.add("");};
-				Boolean isTrue = pos != null && pos < values.size();
+				Boolean isTrue = pos != null && pos < values.length;
 				Condition aCondition = new Condition(() -> isTrue);
 				aCondition.ifThenElse(truePassage, elsePassage);
 			});

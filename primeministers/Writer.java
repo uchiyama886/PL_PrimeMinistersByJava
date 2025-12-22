@@ -104,11 +104,10 @@ public class Writer extends IO
 			Calendar now = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd 'at' HH:mm:ss");
 			String dataString = sdf.format(now.getTime());
-
-			aWriter.write("<hr>\n");
-			aWriter.write("<div class=\"right-small\">Created by csv2html.Translator on"+dataString+"</div>\n");
-			aWriter.write("</body>\n");
-			aWriter.write("</html>\n");
+			writeLine(aWriter, 0, "<hr>");
+			writeLine(aWriter, 0,"<div class=\"right-small\">Created by csv2html.Translator on"+dataString+"</div>");
+			writeLine(aWriter, 0,"</body>");
+			writeLine(aWriter, 0,"</html>");
 		} catch (IOException aException) {aException.printStackTrace();}
 		return;
 	}
@@ -200,6 +199,21 @@ public class Writer extends IO
 			try { writeLine(aWriter, level.get(), "</tr>");}
 			catch (IOException anException) {anException.printStackTrace();}
 		});
+		try {
+			line.decrementAndGet();
+			writeLine(aWriter, line.get(), "</tbody>");
+			line.decrementAndGet();
+			writeLine(aWriter, line.get(), "</table>");
+			line.decrementAndGet();
+			writeLine(aWriter, line.get(), "</td>");
+			line.decrementAndGet();
+			writeLine(aWriter, line.get(), "</tr>");
+			line.decrementAndGet();
+			writeLine(aWriter, line.get(), "</tbody>");
+			line.decrementAndGet();
+			writeLine(aWriter, line.get(), "</table>");
+		}catch (IOException anExcepition) {anExcepition.printStackTrace();}
+
 		return;
 	}
 

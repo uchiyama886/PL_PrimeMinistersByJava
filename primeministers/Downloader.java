@@ -48,9 +48,9 @@ public class Downloader extends IO
         String fileString = urlString.substring(urlString.lastIndexOf("/") + 1);
 		filePath = filePath + fileString;
 		try(InputStream inputStream = aURL.openStream();
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8"));)
-		{
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+			BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8"));)
+		{	
 			String aString;
 			while ((aString = bufferedReader.readLine()) != null)
 			{

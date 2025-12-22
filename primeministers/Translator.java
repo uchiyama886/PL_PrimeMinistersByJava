@@ -208,7 +208,9 @@ public class Translator extends Object
 				};
 				Runnable elsePassage = () -> { 
 					int index = inAttr.indexOf(key);
-					value[0] = aTuple.values().get(index);};
+					value[0] = aTuple.values().get(index);
+				};
+					
 				Condition isDaysOrImage = new Condition(() -> key.equals("days") || key.equals("image"));
 				isDaysOrImage.ifThenElse(whenDaysOrImage, elsePassage);
 				
