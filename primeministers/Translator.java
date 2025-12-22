@@ -4,10 +4,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import condition.Condition;
 
 /**
  * トランスレータ：CSVファイルをHTMLページへと変換するプログラム。
@@ -56,7 +63,40 @@ public class Translator extends Object
 	 */
 	public String computeNumberOfDays(String periodString)
 	{
-		return null;
+		String[] dates = periodString.split("〜");
+		String startString = dates[0].trim();
+		String endString = (dates.length > 1) ? dates[1].trim() : "";
+
+		try {
+			SimpleDateFormat aFormat = new SimpleDateFormat("yyyy年MM月dd日");
+
+			Date startDate = aFormat.parse(startString);
+
+			Date endDate  = (endString.isEmpty()) ? new Date() : aFormat.parse(endString); 
+
+			GregorianCalendar startCalendar = new GregorianCalendar();
+			startCalendar.setGregorianChange(new Date(Long.MIN_VALUE));
+			startCalendar.setTime(startDate);
+
+			GregorianCalendar endCalendar = new GregorianCalendar();
+			endCalendar.setGregorianChange(new Date(Long.MIN_VALUE));
+			endCalendar.setTime(endDate);
+
+			int[] timeFields = {Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND, Calendar.MILLISECOND};
+			Arrays.stream(timeFields).forEach((int field) -> {
+				startCalendar.set(field, 0);
+				endCalendar.set(field, 0);
+			});
+
+			long startMillis = startCalendar.getTimeInMillis();
+			long endMillis = endCalendar.getTimeInMillis();
+			long diffMillis = endMillis - startMillis;
+
+			long dayMillis = 1000L * 60L * 60L * 24L;
+			long numberOfDays = (diffMillis / dayMillis) + 1;
+
+			return String.valueOf(numberOfDays);
+		} catch (Exception anEnException) {return "";}
 	}
 
 	/**
@@ -68,7 +108,29 @@ public class Translator extends Object
 	 */
 	public String computeStringOfImage(String aString, Tuple aTuple, int no)
 	{
-		return null;
+		int indexThumbnail = aTuple.attributes().indexOfThumbnail();
+
+		String thumbnailString = aTuple.values().get(indexThumbnail);
+
+		int width = 25;
+		int height = 32;
+
+		try {
+			String baseDirectory = aTuple.attributes().baseDirectory();
+			File thumbnailFile = new File(baseDirectory, thumbnailString);
+
+			BufferedImage image = javax.imageio.ImageIO.read(thumbnailFile);
+			width = image.getWidth();
+			height = image.getHeight();
+		} catch (Exception anException) {anException.printStackTrace();}
+
+		StringBuilder aBuffer = new StringBuilder();
+		aBuffer.append("<a name=\"").append(no).append("\" href=\"").append(aString).append("\">")
+				.append("<img class=\"borderless\" src=\"").append(thumbnailString).append("\" ")
+				.append("width=\"").append(width).append("\" height=\"").append(height).append("\" ")
+				.append("alt=\"").append(aString.substring(aString.lastIndexOf("/")+1)).append("\">")
+				.append("</a>");
+		return aBuffer.toString();
 	}
 
 	/**
@@ -121,6 +183,44 @@ public class Translator extends Object
 	 */
 	public void translate()
 	{
+		Reader aReader = new Reader(this.inputTable);
+		aReader.perform();
+
+		List<Tuple> inputTuples = this.inputTable.tuples();
+		Attributes inAttr = this.inputTable.attributes();
+		Attributes outAttr = this.outputTable.attributes();
+		
+		inputTuples.forEach((Tuple aTuple) -> {
+			List<String> outValues = new ArrayList<>();
+			
+			outAttr.keys().forEach((String key) -> {
+				String[] value = new String[1];
+				Runnable whenDaysOrImage = () -> {
+					Runnable whenDays = () -> {
+						String period = aTuple.values().get(aTuple.attributes().indexOfPeriod());
+						value[0] = this.computeNumberOfDays(period);
+					};
+					Runnable whenImage = () -> {
+						String image = aTuple.values().get(aTuple.attributes().indexOfImage());
+						int indexNo = inAttr.indexOfNo();
+						int no = Integer.parseInt(aTuple.values().get(indexNo));
+						value[0] = this.computeStringOfImage(image, aTuple, no);
+					};
+					Condition isDays = new Condition(() -> key.equals("days"));
+					isDays.ifThenElse(whenDays, whenImage);
+				};
+				Runnable elsePassage = () -> { 
+					int index = inAttr.indexOf(key);
+					value[0] = aTuple.values().get(index);};
+				Condition isDaysOrImage = new Condition(() -> key.equals("days") || key.equals("image"));
+				isDaysOrImage.ifThenElse(whenDaysOrImage, elsePassage);
+				
+				outValues.add(value[0]);
+			});
+
+			Tuple outTuple = new Tuple(outAttr, outValues);
+			this.outputTable.add(outTuple);
+		});
 		return;
 	}
 }
