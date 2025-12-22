@@ -2,12 +2,14 @@ package primeministers;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import utility.StringUtility;
 import condition.Condition;
+import condition.Interval;
 
 /**
  * 入出力：リーダ・ダウンローダ・ライタを抽象する。
@@ -48,13 +50,19 @@ public abstract class IO extends Object
 	public static void deleteFileOrDirectory(File aFile)
 	{
 		if (!aFile.exists()) { return; }
-		if (aFile.isFile()) { aFile.delete(); }
-		if (aFile.isDirectory())
-		{
+		Runnable fileDelete = () -> {aFile.delete();};
+		Condition isFile = new Condition(() -> aFile.isFile());
+		isFile.ifTrue(fileDelete); 
+
+		Runnable directoryDelete = () -> {
 			File[] files = aFile.listFiles();
-			for (File each : files) { IO.deleteFileOrDirectory(each); }
+			Arrays.stream(files).forEach(each -> {
+				IO.deleteFileOrDirectory(each);
+			});
 			aFile.delete();
-		}
+		};
+		Condition isDirectory = new Condition(() -> aFile.isDirectory());
+		isDirectory.ifTrue(directoryDelete);
 
 		return;
 	}
@@ -71,14 +79,14 @@ public abstract class IO extends Object
 		StringBuilder result = new StringBuilder(aString.length());
 		Consumer<Integer> loopPasage = index -> {
 			char aCharacter = aString.charAt(index);
-			new Condition.Switch()
-				.addCase(() -> aCharacter.compareTo('&') == 0, () -> {result.append("&amp;");})
-				.addCase(() -> aCharacter.compareTo('<') == 0, () -> {result.append("&lt;");})
-				.addCase(() -> aCharacter.compareTo('>') == 0, () -> {result.append("&gt;");})
-				.addCase(() -> aCharacter.compareTo('"') == 0, () -> {result.append("&quot;");})
-				.defaultCase(() -> {result.append(aCharacter);})
-				.evaluate();
+			Runnable convert = () -> {result.append("&quot;");};
+			Runnable elsePssage = () -> {result.append(aCharacter);};
+			Boolean isQuot = aCharacter == '"';
+			Condition aCondition = new Condition(() -> isQuot);
+			aCondition.ifThenElse(convert, elsePssage);	
 		};
+		Interval<Integer> anInterval = new Interval<Integer>(0, index -> index < aString.length(), index -> index++);
+		anInterval.forEach(loopPasage);
 	
 		return result.toString();
 	}
