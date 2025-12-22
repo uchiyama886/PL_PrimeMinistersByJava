@@ -2,6 +2,8 @@ package primeministers;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.List;
 import utility.ImageUtility;
@@ -102,9 +104,14 @@ public class Table extends Object
 	 * @return 画像
 	 */
 	private BufferedImage picture(String aString)
-	{
-		BufferedImage aPicture = null;
+	{	
 		// imagesディレクトリを見に行って当該画像をBufferedImageに変換して返す
+		String aDirectory = this.attributes.baseDirectory();
+		File aFile = new File(aDirectory, aString);
+		if(!aFile.exists()) return null;
+
+		try { return ImageIO.read(aFile);}
+		catch (IOException anExeption) {anExeption.printStackTrace();}
 		return null;
 	}
 
