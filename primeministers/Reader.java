@@ -31,13 +31,14 @@ public class Reader extends IO
 	public void perform()
 	{
 		List<String> lines = IO.readTextFromURL(table().attributes().csvUrl());
-
-		String headerLine = lines.get(0);
-		List<String> headers = IO.splitString(headerLine, ",");
 		if(lines == null || lines.isEmpty()) {
 			System.err.println("Warnig: CSV file is empty or not found.");
 			return;
 		}
+
+		String headerLine = lines.get(0);
+		List<String> headers = IO.splitString(headerLine, ",");
+		
 
 		Map<String, Integer> csvIndex = new HashMap<>();
 		Consumer<Integer> loopPassage = index -> {csvIndex.put(headers.get(index), index);};

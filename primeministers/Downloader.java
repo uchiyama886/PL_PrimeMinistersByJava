@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-//import java.io.FileNotFoundException;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -69,10 +69,12 @@ public class Downloader extends IO
 				bufferedWriter.write(aString);
 				bufferedWriter.newLine();
 			}
+			bufferedWriter.flush();
 	
 			bufferedReader.close();
 			bufferedWriter.close();
 		}
+		catch (FileNotFoundException anExeption) {resourceNotFound(urlString);}
 		catch (UnsupportedEncodingException anException) { anException.printStackTrace(); }
 		catch (IOException anException) { anException.printStackTrace(); }
 
