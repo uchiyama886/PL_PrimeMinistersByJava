@@ -2,7 +2,6 @@ package primeministers;
 
 import condition.Condition;
 import condition.Interval;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.HashMap;
